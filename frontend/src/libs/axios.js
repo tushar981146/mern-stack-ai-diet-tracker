@@ -1,30 +1,24 @@
-import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
-import { connectDB } from './libs/db.js';
-import todayCalories from './routes/list.js';
+import axios from 'axios';
 
-dotenv.config();
+export const axiosInstance = axios.create({
+    baseURL: "https://mern-stack-ai-diet-tracker-backend.onrender.com/",
+    withCredentials: true,
+})
 
-const app = express();
-
-app.use(express.json({ limit: '10mb' }));
-app.use(cookieParser());
-
-app.use(cors({
-  origin: "https://mern-stack-ai-diet-tracker-frontend.onrender.com",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
-
-// Route
-app.use("/today", todayCalories);
-
-connectDB();
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+axiosInstance.interceptors.response.use(
+  response => response,
+  error => {
+    // Handle CORS errors specifically
+    if (error.message === 'Network Error') {
+      console.error('CORS/Network Error. Check backend configuration.');
+    }
+    
+    // Handle 401 Unauthorized
+    if (error.response?.status === 401) {
+      console.log('Unauthorized access');
+      // You can redirect to login here if needed
+    }
+    
+    return Promise.reject(error);
+  }
+);
