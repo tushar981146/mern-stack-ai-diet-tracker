@@ -3,33 +3,28 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { connectDB } from './libs/db.js';
+import todayCalories from './routes/list.js';
 
+dotenv.config();
 
 const app = express();
 
-
-
-import todayCalories from './routes/list.js'
-
-
-dotenv.config();
 app.use(express.json({ limit: '10mb' }));
-app.use(cookieParser({ limit: '10mb', extended: true }));
-
+app.use(cookieParser());
 
 app.use(cors({
   origin: "https://mern-stack-ai-diet-tracker-frontend.onrender.com",
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-
+// Route
 app.use("/today", todayCalories);
-app.use('/today', todayCalories);
 
+connectDB();
 
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
-  console.log(`Server is running on port, http://localhost:${PORT}`);
-  connectDB();
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
