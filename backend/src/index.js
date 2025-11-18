@@ -12,12 +12,7 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 
-app.use(cors({
-  origin: "https://mern-stack-ai-diet-tracker-frontend.onrender.com",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+app.use(cors());
 
 // Route
 app.use("/today", todayCalories);
