@@ -26,6 +26,13 @@ app.options('/*', (req, res) => {
     res.send(200);
 });
 
+app.use((req, res, next) => {
+    // 💡 FIX: This forces the correct header to be set last.
+    res.setHeader('Access-Control-Allow-Origin', 'https://mern-stack-ai-diet-tracker-frontend.onrender.com');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+
 // Route
 app.use("/today", todayCalories);
 
