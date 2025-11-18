@@ -19,6 +19,8 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
+app.options('*', cors())
+
 // Route
 app.use("/today", todayCalories);
 
