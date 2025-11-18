@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000/ || https://mern-stack-ai-diet-tracker-backend.onrender.com",
+    baseURL: "https://mern-stack-ai-diet-tracker-backend.onrender.com",
     withCredentials: true,
 })
 
