@@ -16,21 +16,9 @@ dotenv.config();
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser({ limit: '10mb', extended: true }));
 
-const allowedOrigins = [
-  "http://localhost:5173",     // local React
-  process.env.FRONTEND_URL,    // future deployed frontend
-];
-app.use(cors({
-  origin: (origin, callback) => {
-    // Mobile apps / Postman → no origin → allow
-    if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+app.use(cors({
+  origin: "https://mern-stack-ai-diet-tracker-frontend.onrender.com",
   credentials: true,
 }));
 
