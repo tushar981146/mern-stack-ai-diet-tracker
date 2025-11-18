@@ -19,7 +19,12 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-app.options('*', cors())
+app.options('/*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'https://mern-stack-ai-diet-tracker-frontend.onrender.com');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.send(200);
+});
 
 // Route
 app.use("/today", todayCalories);
