@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const axiosInstance = axios.create({
     baseURL: "https://mern-stack-ai-diet-tracker-backend.onrender.com/",
-    withCredentials: true,
+    withCredentials: false,
 })
 
 axiosInstance.interceptors.response.use(
